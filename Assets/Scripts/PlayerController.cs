@@ -7,31 +7,68 @@
 *****************************************************************************/
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
     #region Variables
+    [Tooltip("ActionMap being used")]
     [SerializeField] private PlayerInput playerInput;
-    [SerializeField] private InputAction move;
-    [SerializeField] private InputAction shoot;
-    [SerializeField] private InputAction restart;
-    [SerializeField] private InputAction quit;
+    private InputAction move;
+    private InputAction shoot;
+    private InputAction restart;
+    private InputAction quit;
+
+    [Tooltip("References the sprite that the player is controlling")]
+    [SerializeField] private Rigidbody2D tank;
+    [SerializeField] private float speed;
+    private float moveDirection;
+
+    private bool tankIsMoving;
 
     #endregion
 
     // Start is called before the first frame update
     void Start()
     {
+        tank = GetComponent<Rigidbody2D>();
         EnableInput();  
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (tankIsMoving)
+        {
+            moveDirection = move.ReadValue<float>();
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        TankMovement();
+    }
+
+    private void TankMovement()
+    {
+        if(tankIsMoving)
+        {
+            Debug.Log("Tank should be moving");
+            tank.velocity = new Vector2(0, speed * moveDirection);
+        }
+        else
+        {
+            Debug.Log("Tank should not be moving");
+            tank.velocity = Vector2.zero;
+        }
+    }
+    private void Shoot()
+    {
+
     }
 
     #region Input Actions
@@ -56,17 +93,18 @@ public class PlayerController : MonoBehaviour
     }
      private void Move_Started(InputAction.CallbackContext obj)
     {
-        Debug.Log("Player is moving");
+        tankIsMoving = true;
     }
 
     private void Move_Canceled(InputAction.CallbackContext obj)
     {
-        Debug.Log("Player move is canceled");
+        tankIsMoving = false;
     }
 
     private void Shoot_Started(InputAction.CallbackContext obj)
     {
         Debug.Log("Bullet was shot");
+        Shoot();
     }
 
     private void Restart_Started(InputAction.CallbackContext obj)
