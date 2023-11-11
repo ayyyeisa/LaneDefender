@@ -9,6 +9,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -55,17 +56,29 @@ public class PlayerController : MonoBehaviour
     }
      private void Move_Started(InputAction.CallbackContext obj)
     {
-
+        Debug.Log("Player is moving");
     }
 
     private void Move_Canceled(InputAction.CallbackContext obj)
     {
-
+        Debug.Log("Player move is canceled");
     }
 
     private void Shoot_Started(InputAction.CallbackContext obj)
     {
+        Debug.Log("Bullet was shot");
+    }
 
+    private void Restart_Started(InputAction.CallbackContext obj)
+    {
+        Debug.Log("Restart button was called.");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    private void Quit_Started(InputAction.CallbackContext obj)
+    {
+        Debug.Log("Player quit game");
+        Application.Quit();
     }
 
     #endregion
@@ -73,7 +86,7 @@ public class PlayerController : MonoBehaviour
     public void OnDestroy()
     {
         move.started -= Move_Started;
-        move.canceled -= Move_Cancelled;
+        move.canceled -= Move_Canceled;
         shoot.started -= Shoot_Started;
         restart.started -= Restart_Started;
         quit.started -= Quit_Started;
