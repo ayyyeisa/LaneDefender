@@ -135,7 +135,7 @@
                     "name": "",
                     "id": "40fa7a37-e3a0-457d-8429-2e90478eaa63",
                     "path": "<Keyboard>/space",
-                    "interactions": "",
+                    "interactions": "Hold,Press",
                     "processors": "",
                     "groups": "",
                     "action": "Shoot",
