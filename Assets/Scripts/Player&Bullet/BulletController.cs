@@ -18,8 +18,10 @@ public class BulletController : MonoBehaviour
     [SerializeField] Rigidbody2D bullet;
 
     [SerializeField] private float speed = 10f;
+    [SerializeField] private float mass;
 
     [SerializeField] private PlayerController playerInstance;
+    [SerializeField] private GameManager gM;
 
     #endregion
 
@@ -28,22 +30,25 @@ public class BulletController : MonoBehaviour
         playerInstance = GetComponent<PlayerController>();
     }
 
-    public void shootOnce()
+    public void ShootOnce()
     {
         bulletSprite = GetComponent<SpriteRenderer>();
         bullet = GetComponent<Rigidbody2D>();
+        this.gameObject.tag = "HeavyBullet";
+        print(this.tag);
         bulletSprite.sprite = sprites[1];
-        bullet.mass += 1;
+        mass = bullet.mass += 1;
         speed *= 1/bullet.mass;
         SetTrajectory();
-
     }
 
-    public void shootHold()
+    public void ShootHold()
     {
          bulletSprite = GetComponent<SpriteRenderer>();
          bullet = GetComponent<Rigidbody2D>();
+        print(this.tag);
          bulletSprite.sprite = sprites[0];
+         mass = bullet.mass;
          speed *= 1/bullet.mass;
          SetTrajectory();
     }
@@ -62,8 +67,8 @@ public class BulletController : MonoBehaviour
         else if(collision.transform.tag == "Enemy")
         {
             Destroy(gameObject);
+            gM.UpdateScore();
             //add explosion effect
-            //get points
         }
     }
 }

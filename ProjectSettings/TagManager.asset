@@ -10,6 +10,8 @@ TagManager:
   - FastEnemy
   - MediumEnemy
   - SlowEnemy
+  - Enemy
+  - HeavyBullet
   layers:
   - Default
   - TransparentFX

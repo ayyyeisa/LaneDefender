@@ -16,6 +16,9 @@ using UnityEngine.SceneManagement;
 public class PlayerController : MonoBehaviour
 {
     #region Variables
+
+    [SerializeField] private GameManager gM;
+
     [Tooltip("ActionMap being used")]
     [SerializeField] private PlayerInput playerInput;
     private InputAction move;
@@ -96,13 +99,13 @@ public class PlayerController : MonoBehaviour
     private void LightBullet()
     { 
         BulletController bullet = Instantiate(this.bulletPrefab, this.transform.position, this.transform.rotation);
-        bullet.shootHold();
+        bullet.ShootHold();
     }
 
     private void HeavyBullet()
     {
         BulletController bullet = Instantiate(this.bulletPrefab, this.transform.position, this.transform.rotation);
-        bullet.shootOnce();
+        bullet.ShootOnce();
     }
 
     private void OnShoot(InputValue ia)
@@ -110,6 +113,8 @@ public class PlayerController : MonoBehaviour
         //starts game if game hasn't started already
         if (!spaceWasPressed)
         {
+            gM.StartScreen.SetActive(false);
+            gM.InGameText.SetActive(true);
             spaceWasPressed = true;
             gameIsRunning = true;
         }
@@ -148,7 +153,6 @@ public class PlayerController : MonoBehaviour
 
         move.started += Move_started;
         move.canceled += Move_canceled;
-        shoot.started += Shoot_started;
         shoot.canceled += Shoot_canceled;                                                           
         restart.started += Restart_started;
         quit.started += Quit_started;
@@ -164,15 +168,6 @@ public class PlayerController : MonoBehaviour
         tankIsMoving = false;
     }
 
-    private void Shoot_started(InputAction.CallbackContext obj)
-    {
-        if(!spaceWasPressed)
-        {
-            gameIsRunning = true;
-            spaceWasPressed = true;
-        }
-    }
-
     private void Shoot_canceled(InputAction.CallbackContext obj)
     {
         spaceIsHeld = false;
@@ -186,8 +181,7 @@ public class PlayerController : MonoBehaviour
 
     private void Quit_started(InputAction.CallbackContext obj)
     {
-        Debug.Log("Player quit game");
-        Application.Quit();
+        SceneManager.LoadScene("MainMenu");
     }
 
     #endregion
@@ -196,7 +190,7 @@ public class PlayerController : MonoBehaviour
     {
         move.started -= Move_started;
         move.canceled -= Move_canceled;
-        shoot.started -= Shoot_started;
+        shoot.canceled -= Shoot_canceled;
         restart.started -= Restart_started;
         quit.started -= Quit_started;
     }

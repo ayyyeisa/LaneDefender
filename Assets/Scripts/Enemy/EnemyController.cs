@@ -8,10 +8,13 @@ public class EnemyController: MonoBehaviour
     [SerializeField] private float speed;
     [SerializeField] private int lives;
 
+    [SerializeField] private GameManager gM;
+
     // Start is called before the first frame update
     void Start()
     {
         enemy = GetComponent<Rigidbody2D>();
+        gM = GetComponent<GameManager>();
     }
     
     void Update()
@@ -21,26 +24,34 @@ public class EnemyController: MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.transform.tag == "Player")
+        if (collision.transform.tag == "Player")
         {
             Destroy(enemy.gameObject);
-            //player loses a life
+            gM.PlayerDied();
         }
-        else if(collision.transform.tag == "LeftBox")
+        else if (collision.transform.tag == "LeftBox")
         {
             Destroy(gameObject);
-            //player loses a life
+            gM.PlayerDied();
         }
 
-        else if(collision.transform.tag == "Bullet")
+        else if (collision.transform.tag == "Bullet")
         {
             lives--;
-            if(lives <= 0)
+            if (lives <= 0)
             {
                 Destroy(enemy.gameObject);
+                gM.UpdateScore();
             }
-            //player gets a point
+        }
+        else if(collision.transform.tag == "HeavyBullet")
+        {
+            lives -= 3;
+            if (lives <= 0)
+            {
+                Destroy(enemy.gameObject);
+                gM.UpdateScore();
+            }
         }
     }
-
 }
