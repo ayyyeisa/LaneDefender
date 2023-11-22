@@ -101,7 +101,8 @@ MonoBehaviour:
   - {fileID: 4568364514317537251, guid: aab8c0e1d697de640a4927d44c7e1f5b, type: 3}
   - {fileID: 7810890547661933294, guid: feecc1ac5cdef8a4cb22bea80005cc6e, type: 3}
   - {fileID: 5107010550728909335, guid: a4c9716b85cc94b478c4197d1d9be402, type: 3}
+  enemyCounter: 000000000000000000000000
   maxEnemyType: 5
   playerInstance: {fileID: 0}
-  maxSpawnRate: 3
-  minSpawnRate: 1
+  maxSpawnRate: 10
+  minSpawnRate: 4

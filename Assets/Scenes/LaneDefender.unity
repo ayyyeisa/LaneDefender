@@ -4760,6 +4760,14 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5051735414636759177, guid: bfdb60d60515a334d8bd51f08ef242fb, type: 3}
+      propertyPath: maxSpawnRate
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5051735414636759177, guid: bfdb60d60515a334d8bd51f08ef242fb, type: 3}
+      propertyPath: minSpawnRate
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5051735414636759177, guid: bfdb60d60515a334d8bd51f08ef242fb, type: 3}
       propertyPath: playerInstance
       value: 
       objectReference: {fileID: 647780735}

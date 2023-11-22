@@ -162,4 +162,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemy: {fileID: 4326299018035289786}
-  speed: 0.1
+  speed: 0.4
+  lives: 5

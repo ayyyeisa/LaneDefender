@@ -1,18 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
     //[SerializeField] private EnemyController enemyPrefab;
     [SerializeField] private EnemyController[] enemies;
-    public int[] enemyCounter = { 0, 0, 0 };
-    [SerializeField] private float maxEnemyType = 5;
 
     [SerializeField] PlayerController playerInstance;
 
-    [SerializeField] private float maxSpawnRate = 3f;
-    [SerializeField] private float minSpawnRate = 1f;
+    [SerializeField] private float maxSpawnRate = 5f;
+    [SerializeField] private float minSpawnRate = 3f;
 
     public Coroutine EnemyRef;
 
@@ -33,7 +32,8 @@ public class EnemySpawner : MonoBehaviour
 
     public IEnumerator StartEnemySpawns()
     {
-        yield return new WaitForSeconds(Random.Range(minSpawnRate, maxSpawnRate));
+        float spawnRate = Random.Range(minSpawnRate, maxSpawnRate);
+        yield return new WaitForSeconds(spawnRate);
         SpawnEnemy();
         EnemyRef = null;
     }
@@ -44,29 +44,7 @@ public class EnemySpawner : MonoBehaviour
         //1 is the medium enemy
         //2 is the slow enemy
         int enemyIndex = Random.Range(0, 3);
-        if(enemyIndex == 0)
-        {
-            enemyCounter[0]++;
-        }
-        else if(enemyIndex == 1)
-        {
-            enemyCounter[1]++;
-        }
-        else if(enemyIndex == 2)
-        {
-            enemyCounter[2]++;
-        }
-        for(int i = 0; i < enemyCounter.Length; i++)
-        {
-            if(enemyCounter[i] >= maxEnemyType)
-            {
-                break;
-            }
-            else
-            {
-                Instantiate(enemies[enemyIndex], this.transform.position, this.transform.rotation);
-            }
-        }
+        Instantiate(enemies[enemyIndex], this.transform.position, this.transform.rotation);
 
     }
 
