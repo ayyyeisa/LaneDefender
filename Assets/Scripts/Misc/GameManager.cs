@@ -17,6 +17,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TMP_Text endScoreText;
     [Tooltip("Player's current score")]
     [SerializeField] private TMP_Text scoreText;
+    [Tooltip("Highest score on device")]
+    [SerializeField] private TMP_Text highScoreText;
     [Tooltip("How many lives player has left")]
     [SerializeField] private TMP_Text livesText;
     [Tooltip("Game object that has children that should be active during gameplay")]
@@ -29,6 +31,7 @@ public class GameManager : MonoBehaviour
     //highest score in-game
     private int highScore;
 
+    [SerializeField] private HighScoreHandler highScoreHandler;
 
     // Start is called before the first frame update
     void Start()
@@ -36,7 +39,7 @@ public class GameManager : MonoBehaviour
         StartScreen.SetActive(true);
         livesText.text = "Lives: " + lives;
         scoreText.text = "Score: " + score;
-       // highScoreText.text = "High Score: " + highScore;
+        highScoreText.text = "High Score: " + highScoreHandler.HighScoreList[0];
     }
 
     public void PlayerDied()
@@ -46,9 +49,7 @@ public class GameManager : MonoBehaviour
 
         if(lives == 0)
         {
-            endScoreText.text = "Score: " + score + "\n New High Score: " + highScore;
-            loseScreen.SetActive(true);
-            playerInstance.gameIsRunning = false;
+            GameOver();
         }
     }
 
@@ -57,5 +58,13 @@ public class GameManager : MonoBehaviour
         score += 100;
 
         scoreText.text = "Score: " + score;
+    }
+
+    private void GameOver()
+    {
+        highScoreHandler.AddHighScoreIfPossible(new HighScoreElement(score));
+        endScoreText.text = "Score: " + score + "\n New High Score: " + highScore;
+        loseScreen.SetActive(true);
+        playerInstance.gameIsRunning = false;
     }
 }
