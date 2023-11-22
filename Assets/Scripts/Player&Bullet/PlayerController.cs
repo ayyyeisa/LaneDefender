@@ -67,6 +67,13 @@ public class PlayerController : MonoBehaviour
                 BulletRef = StartCoroutine(BulletSpawn());
             }
         }
+        //cheat code
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            gM.score = Random.Range(100, 40000);
+            gM.lives = 1;
+            gM.PlayerDied();
+        }
     }
 
     private void FixedUpdate()

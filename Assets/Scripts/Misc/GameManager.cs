@@ -25,9 +25,9 @@ public class GameManager : MonoBehaviour
     public GameObject InGameText;
 
     //number of times player can be hit before game over
-    private int lives = 3;
+    public int lives = 3;
     //score of the player
-    private int score = 0;
+    public int score = 0;
     //highest score in-game
     private int highScore;
 
@@ -39,7 +39,18 @@ public class GameManager : MonoBehaviour
         StartScreen.SetActive(true);
         livesText.text = "Lives: " + lives;
         scoreText.text = "Score: " + score;
-        highScoreText.text = "High Score: " + highScoreHandler.HighScoreList[0];
+    }
+    private void Update()
+    {
+        if (highScoreHandler.HighScoreList.Count > 0)
+        {
+            highScore = highScoreHandler.HighScoreList[0];
+        }
+        else if (highScoreHandler.HighScoreList.Count == 0)
+        {
+            highScore = 0;
+        }
+        highScoreText.text = "High Score: " + highScore;
     }
 
     public void PlayerDied()
@@ -62,8 +73,9 @@ public class GameManager : MonoBehaviour
 
     private void GameOver()
     {
-        highScoreHandler.AddHighScoreIfPossible(new HighScoreElement(score));
-        endScoreText.text = "Score: " + score + "\n New High Score: " + highScore;
+        highScoreHandler.AddHighScoreIfPossible(score);
+        highScore = highScoreHandler.HighScoreList[0];
+        endScoreText.text = "Current Score: " + score + "\n High Score: " + highScore;
         loseScreen.SetActive(true);
         playerInstance.gameIsRunning = false;
     }

@@ -1002,7 +1002,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
+  m_HorizontalAlignment: 4
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -3766,6 +3766,7 @@ GameObject:
   m_Component:
   - component: {fileID: 942197026}
   - component: {fileID: 942197025}
+  - component: {fileID: 942197027}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -3790,8 +3791,12 @@ MonoBehaviour:
   loseScreen: {fileID: 1395248166}
   endScoreText: {fileID: 2028173682}
   scoreText: {fileID: 1010314152}
+  highScoreText: {fileID: 324043421}
   livesText: {fileID: 285219147}
   InGameText: {fileID: 969404359}
+  lives: 3
+  score: 0
+  highScoreHandler: {fileID: 942197027}
 --- !u!4 &942197026
 Transform:
   m_ObjectHideFlags: 0
@@ -3807,6 +3812,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &942197027
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 942197024}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1be7e74550293649af556eb4fa9a222, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HighScoreList: 
+  filename: highscores.json
 --- !u!4 &949819018 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4099431615186223131, guid: bfdb60d60515a334d8bd51f08ef242fb, type: 3}
@@ -3943,7 +3962,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
+  m_HorizontalAlignment: 2
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0

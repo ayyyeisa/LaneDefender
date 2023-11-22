@@ -1,35 +1,34 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class HighScoreUI : MonoBehaviour
 {
-    [SerializeField] private GameObject highScoreUIElementPrefab;
-    [SerializeField] private Transform elementWrapper;
+    [SerializeField] private TMP_Text[] uiElements;
 
-    List<GameObject> uiElements = new List<GameObject>();
+    [SerializeField] private HighScoreHandler highScoreHandler;
 
-    private void UpdateUI (List<HighScoreElement> list)
+    private void OnEnable()
+    {
+        HighScoreHandler.onHighScoreListChanged += UpdateUI;
+    }
+
+    private void OnDisable()
+    {
+        HighScoreHandler.onHighScoreListChanged -= UpdateUI;
+    }
+    private void UpdateUI (List<int> list)
     {
         for(int i = 0; i < list.Count; i++)
         {
-            HighScoreElement element = list[i];
+            int points = list[i];
+            print(points);
 
-            if(element.Points > 0)
-            {
-                if(i >= uiElements.Count)
-                {
-                    var inst = Instantiate(highScoreUIElementPrefab, Vector3.zero, Quaternion.identity);
-                    inst.transform.SetParent(elementWrapper, false);
-
-                        uiElements.Add(inst);
-                }
-
-                //write or overwrite points
-                var texts = uiElements[i].GetComponentsInChildren<Text>();
-                texts[0].text = element.Points.ToString();
-            }
+            //overwrite points
+            uiElements[i].text = points.ToString();
+     
         }
     }
 }
