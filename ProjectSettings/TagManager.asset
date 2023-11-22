@@ -3,7 +3,13 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - LeftBox
+  - RightBox
+  - Bullet
+  - FastEnemy
+  - MediumEnemy
+  - SlowEnemy
   layers:
   - Default
   - TransparentFX
@@ -11,11 +17,11 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Bullet
+  - Player
+  - Enemy
+  - Background
+  - Boundaries
   - 
   - 
   - 
@@ -40,4 +46,13 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Background
+    uniqueID: 369901765
+    locked: 0
+  - name: Player
+    uniqueID: 3006597221
+    locked: 0
+  - name: Enemy
+    uniqueID: 3238209785
     locked: 0
