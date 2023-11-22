@@ -118,7 +118,7 @@ public class PlayerController : MonoBehaviour
             spaceWasPressed = true;
             gameIsRunning = true;
         }
-        else
+        else if (spaceWasPressed && gameIsRunning)
         {
             float val = ia.Get<float>();
 

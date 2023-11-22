@@ -28,6 +28,7 @@ public class BulletController : MonoBehaviour
     private void Start()
     {
         playerInstance = GetComponent<PlayerController>();
+        gM = FindObjectOfType<GameManager>();
     }
 
     public void ShootOnce()

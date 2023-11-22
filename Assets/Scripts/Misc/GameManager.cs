@@ -46,7 +46,7 @@ public class GameManager : MonoBehaviour
 
         if(lives == 0)
         {
-            endScoreText.text = "Score: " + score + "/n New High Score: " + highScore;
+            endScoreText.text = "Score: " + score + "\n New High Score: " + highScore;
             loseScreen.SetActive(true);
             playerInstance.gameIsRunning = false;
         }

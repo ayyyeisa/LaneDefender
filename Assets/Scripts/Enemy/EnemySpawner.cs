@@ -26,7 +26,7 @@ public class EnemySpawner : MonoBehaviour
         }
         if(!playerInstance.gameIsRunning && playerInstance.spaceWasPressed)
         {
-            StopCoroutine(StartEnemySpawns());
+            StopAllCoroutines();
         }
     }
 
