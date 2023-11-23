@@ -40,7 +40,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Variables relating to the bullets being spawned")]
     [SerializeField] private BulletController bulletPrefab;
-    [SerializeField] private float delay = .5f; //allows for delay
+    [SerializeField] private float delay = 1f; //allows for delay
     [SerializeField] private bool spaceIsHeld;
     #endregion
 
@@ -48,7 +48,6 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
-
         gameIsRunning = false;
         spaceWasPressed = false;
         spaceIsHeld = false;
