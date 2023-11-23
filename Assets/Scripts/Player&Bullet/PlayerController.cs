@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour
     #region Variables
 
     [SerializeField] private GameManager gM;
+    private AudioManager audioManager;
 
     [Tooltip("ActionMap being used")]
     [SerializeField] private PlayerInput playerInput;
@@ -35,9 +36,9 @@ public class PlayerController : MonoBehaviour
     public bool spaceWasPressed;
     public bool gameIsRunning;
 
-
     public Coroutine BulletRef;
 
+    [Header("Variables relating to the bullets being spawned")]
     [SerializeField] private BulletController bulletPrefab;
     [SerializeField] private float delay = .5f; //allows for delay
     [SerializeField] private bool spaceIsHeld;
@@ -46,6 +47,8 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+
         gameIsRunning = false;
         spaceWasPressed = false;
         spaceIsHeld = false;
@@ -56,6 +59,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //reads the values of key inputs
         if (tankIsMoving)
         {
             moveDirection = move.ReadValue<float>();
@@ -67,13 +71,6 @@ public class PlayerController : MonoBehaviour
                 BulletRef = StartCoroutine(BulletSpawn());
             }
         }
-        //cheat code
-        if (Input.GetKeyDown(KeyCode.X))
-        {
-            gM.score = Random.Range(100, 40000);
-            gM.lives = 1;
-            gM.PlayerDied();
-        }
     }
 
     private void FixedUpdate()
@@ -84,6 +81,9 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Moves the tank up and down depending on player input
+    /// </summary>
     private void TankMovement()
     {
         if (tankIsMoving)
@@ -95,7 +95,11 @@ public class PlayerController : MonoBehaviour
             tank.velocity = Vector2.zero;
         }
     }
-  
+    
+    /// <summary>
+    /// Rapid fires according to the delay
+    /// </summary>
+    /// <returns>time in between light bullet spawning</returns>
     public IEnumerator BulletSpawn()
     {
         yield return new WaitForSeconds(delay);
@@ -103,18 +107,33 @@ public class PlayerController : MonoBehaviour
         BulletRef = null;
     }
 
+    /// <summary>
+    /// Instantiates a light bullet and called upon the behaviors and properties of a light bullet
+    /// </summary>
     private void LightBullet()
-    { 
+    {
+        audioManager.PlaySFX(GameObject.FindObjectOfType<AudioManager>().TankShoot);
         BulletController bullet = Instantiate(this.bulletPrefab, this.transform.position, this.transform.rotation);
         bullet.ShootHold();
     }
 
+    /// <summary>
+    /// Instantiates a heavy bullet and calls upon the behaviors and properties of a heavy bullet
+    /// </summary>
     private void HeavyBullet()
     {
+        audioManager.PlaySFX(GameObject.FindObjectOfType<AudioManager>().TankShoot);
         BulletController bullet = Instantiate(this.bulletPrefab, this.transform.position, this.transform.rotation);
         bullet.ShootOnce();
     }
 
+    /// <summary>
+    /// When space is pressed for the first time, the game starts.
+    /// 
+    /// When pressed afterwards, HeavyBullet() is called.
+    /// When held, spaceIsheld turns LightBullet() is called
+    /// </summary>
+    /// <param name="ia"></param>
     private void OnShoot(InputValue ia)
     {
         //starts game if game hasn't started already

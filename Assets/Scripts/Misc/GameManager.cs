@@ -1,3 +1,10 @@
+/*****************************************************************************
+// File Name : GameManager.cs
+// Author : Isa Luluquisin
+// Creation Date : November 20, 2023
+//
+// Brief Description : This is a file that handles panels and text throughout the game.
+*****************************************************************************/
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -5,6 +12,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    #region Variables
     [Header("Object references for scripts")]
     [SerializeField] private PlayerController playerInstance;
 
@@ -33,15 +41,21 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private HighScoreHandler highScoreHandler;
 
+    private AudioManager audioManager;
+
+    #endregion
+
     // Start is called before the first frame update
     void Start()
     {
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
         StartScreen.SetActive(true);
         livesText.text = "Lives: " + lives;
         scoreText.text = "Score: " + score;
     }
     private void Update()
     {
+        //updates the high score if there is a highscore in the list
         if (highScoreHandler.HighScoreList.Count > 0)
         {
             highScore = highScoreHandler.HighScoreList[0];
@@ -53,8 +67,13 @@ public class GameManager : MonoBehaviour
         highScoreText.text = "High Score: " + highScore;
     }
 
+    /// <summary>
+    /// Handles what happens if a player loses a life. This is updated on-screen.
+    /// When player has used up all their lives, it is game over.
+    /// </summary>
     public void PlayerDied()
     {
+        audioManager.PlaySFX(GameObject.FindObjectOfType<AudioManager>().LifeLost);
         lives--;
         livesText.text = "Lives: " + lives;
 
@@ -64,13 +83,22 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Updates the current score in the current game. Each enemy death is worth 100 points
+    /// </summary>
     public void UpdateScore()
     {
+        audioManager.PlaySFX(GameObject.FindObjectOfType<AudioManager>().EnemyDeath);
         score += 100;
 
         scoreText.text = "Score: " + score;
     }
 
+    /// <summary>
+    /// Handles what occurs when the game ends. The high score is saved if it is in the
+    /// top 5 scores. Both the currrent and high scores are listed and instructions to restart
+    /// the game or go back to main menu are listed. 
+    /// </summary>
     private void GameOver()
     {
         highScoreHandler.AddHighScoreIfPossible(score);

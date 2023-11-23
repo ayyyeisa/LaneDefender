@@ -12,6 +12,7 @@ TagManager:
   - SlowEnemy
   - Enemy
   - HeavyBullet
+  - Audio
   layers:
   - Default
   - TransparentFX

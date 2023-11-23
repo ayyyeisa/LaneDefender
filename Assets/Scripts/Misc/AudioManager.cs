@@ -19,9 +19,9 @@ public class AudioManager : MonoBehaviour
 
     [Header("--------- SFX Clips ----------")]
     [Tooltip("Played when player shoots a bullet")]
-    public AudioClip BulletFired;
+    public AudioClip TankShoot;
     [Tooltip("Played when a player or left side gets hit by enemy")]
-    public AudioClip PlayerHit;
+    public AudioClip LifeLost;
     [Tooltip("Played when an enemy gets hit")]
     public AudioClip EnemyHit;
     [Tooltip("Played when an enemy dies")]

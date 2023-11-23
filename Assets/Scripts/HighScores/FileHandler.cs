@@ -1,3 +1,9 @@
+/****************************************************************************
+ * 
+ * This file was downloaded from github to read json files. Doing so allows
+ * for the storage of highscores across multiple playthroughs.
+ * 
+ * **************************************************************************/
 using System;
 using System.Collections.Generic;
 using System.IO;
